@@ -10,7 +10,7 @@ namespace MailReceiver.Console
     {
         static void Main(string[] args)
         {
-          var test =  MailReceiver.Base.MailService.SendMail();
+            var test =  MailReceiver.Base.MailService.SendMail();
         }
     }
 }
