@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\MailReceiverEnum.cs" />
+    <Compile Include="Entity\Content.cs" />
+    <Compile Include="Entity\Credential.cs" />
     <Compile Include="Entity\MailRequest.cs" />
     <Compile Include="Entity\Response.cs" />
     <Compile Include="Entity\Sender.cs" />
@@ -49,7 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mail Template\header.png" />
+    <Content Include="header.png" />
     <Content Include="Mail Template\1.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

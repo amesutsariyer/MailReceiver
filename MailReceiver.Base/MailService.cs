@@ -10,7 +10,7 @@ namespace MailReceiver.Base
 
     public static class MailService
     {
-        public static Response SendMail()
+        public static Response SendMail(MailRequest request)
         {
             Response response = new Response();
             try
@@ -19,14 +19,14 @@ namespace MailReceiver.Base
                 {
                     var credential = new NetworkCredential
                     {
-                        UserName = "info@ahmetsariyer.com",
-                        Password = ""
+                        UserName = request.Credential.UserName,
+                        Password = request.Credential.Password
                     };
                     client.Credentials = credential;
-                    client.Host = "ahmetsariyer.com";
-                    client.Port = 587;
+                    client.Host = request.HostName;
+                    client.Port = request.Port;
                     client.EnableSsl = false;
-                    var message = GetMailWithOutImg();
+                    var message = GetMailWithOutImg(request);
                     client.Send(message);
                 }
                 return response;
@@ -38,6 +38,19 @@ namespace MailReceiver.Base
                 return response;
             }
         }
+        private static MailMessage GetMailWithOutImg(MailRequest request)
+        {
+            var emailMessage = new MailMessage();
+            foreach (var item in request.ToArray)
+            {
+                emailMessage.Bcc.Add(new MailAddress(item));
+            }
+            emailMessage.From = new MailAddress(request.From);
+            emailMessage.Subject = request.Subject;
+            emailMessage.Body = GetMailTemplate1(request.Content);
+            emailMessage.IsBodyHtml = true;
+            return emailMessage;
+        }
         private static AlternateView GetEmbeddedImage(String filePath)
         {
             LinkedResource res = new LinkedResource(filePath);
@@ -47,16 +60,7 @@ namespace MailReceiver.Base
             alternateView.LinkedResources.Add(res);
             return alternateView;
         }
-        private static MailMessage GetMailWithOutImg()
-        {
-            var emailMessage = new MailMessage();
-            emailMessage.To.Add(new MailAddress("ahmetmesutsariyer@gmail.com"));
-            emailMessage.From = new MailAddress("info@ahmetsariyer.com");
-            emailMessage.Subject = "Subsctiption Test";
-            emailMessage.Body = GetMailTemplate1();
-            emailMessage.IsBodyHtml = true;
-            return emailMessage;
-        }
+
         private static MailMessage GetMailWithImg()
         {
             var emailMessage = new MailMessage();
@@ -67,7 +71,7 @@ namespace MailReceiver.Base
             emailMessage.IsBodyHtml = true;
             return emailMessage;
         }
-        private static string GetMailTemplate1()
+        private static string GetMailTemplate1(Content content)
         {
             string sb = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" +
             "<html>" +
@@ -361,7 +365,7 @@ namespace MailReceiver.Base
             "                                            <td class=\"headerContent\">" +
             "                                            " +
             "                                            	<!-- // Begin Module: Standard Header Image \\\\ -->" +
-            "                                            	<img src=\"http://213.128.89.156/plesk-site-preview/uskudardenetim.com/Images/header.png \" style=\"max-width:600px;\" id=\"headerImage campaign-icon\" mc:label=\"header_image\" mc:edit=\"header_image\" mc:allowdesigner mc:allowtext />" +
+            "                                            	<img src=\"http://213.128.89.156/plesk-site-preview/uskudardenetim.com/Images/header.png?v2 \" style=\"max-width:600px;\" id=\"headerImage campaign-icon\" mc:label=\"header_image\" mc:edit=\"header_image\" mc:allowdesigner mc:allowtext />" +
             "                                            	<!-- // End Module: Standard Header Image \\\\ -->" +
             "                                            " +
             "                                            </td>" +
@@ -382,8 +386,8 @@ namespace MailReceiver.Base
             "                                                    <tr>" +
             "                                                        <td valign=\"top\" class=\"bodyContent\">" +
             "                                                            <div mc:edit=\"std_content00\">" +
-            "                                                                <h2 class=\"h2\">2018 Yılı İçin Yeniden Değerleme Oranı</h2>" +
-            "                                                                <strong>Üsküdar Denetim:</strong> Yayınlamış olan bu sirküyü okumak için lütfen bizi ziyaret edin." +
+            "                                                                <h2 class=\"h2\">" + content.Header + "</h2>" +
+            "                                                                <strong>" + content.StrongSubHeader + ":</strong>" + "  " + content.SubHeader +
             "                                                                <br />" +
             "                                                            </div>" +
             "														</td>" +
@@ -394,7 +398,7 @@ namespace MailReceiver.Base
             "                                                            	<tr>" +
             "                                                                	<td valign=\"middle\" class=\"templateButtonContent\">" +
             "                                                                    	<div mc:edit=\"std_content01\">" +
-            "                                                                        	<a style=\" color:white !important\" href=\"http://213.128.89.156/plesk-site-preview/uskudardenetim.com/Circular/Detail/8effacc6-3912-457b-98dd-e89a8d90300f \" target =\"_blank\">Devamını Oku</a>" +
+            "                                                                        	<a style=\" color:white !important\" href=\" "+ content.Link +" \" target =\"_blank\">Devamını Oku</a>" +
             "                                                                        </div>" +
             "                                                                    </td>" +
             "                                                                </tr>" +
@@ -422,7 +426,7 @@ namespace MailReceiver.Base
             "                                                    <tr>" +
             "                                                        <td valign=\"top\">" +
             "                                                            <div mc:edit=\"std_footer\">" +
-            "																<em>Copyright &copy; "+DateTime.Now.Year.ToString()+", Tüm Hakları Saklıdır.</em>" +
+            "																<em>Copyright &copy; " + DateTime.Now.Year.ToString() + ", Tüm Hakları Saklıdır.</em>" +
             "																<br />" +
             "																<strong>Mail Adresimiz:</strong>" +
             "																<br />" +
