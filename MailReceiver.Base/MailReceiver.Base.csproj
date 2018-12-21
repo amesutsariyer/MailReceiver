@@ -48,5 +48,9 @@
     <Compile Include="MailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mail Template\header.png" />
+    <Content Include="Mail Template\1.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
