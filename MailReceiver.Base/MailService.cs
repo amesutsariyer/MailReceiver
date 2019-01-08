@@ -12,7 +12,6 @@ namespace MailReceiver.Base
     {
         public static Response SendMail(MailRequest request)
         {
-            Response response = new Response();
             try
             {
                 using (var client = new SmtpClient())
@@ -29,10 +28,11 @@ namespace MailReceiver.Base
                     var message = GetMailWithOutImg(request);
                     client.Send(message);
                 }
-                return response;
+                return new Response() { Success = true, Message = "Mail Gönderimi Başarılı" };
             }
             catch (Exception ex)
             {
+                Response response = new Response();
                 response.Success = false;
                 response.Message = ex.Message;
                 return response;
@@ -365,7 +365,7 @@ namespace MailReceiver.Base
             "                                            <td class=\"headerContent\">" +
             "                                            " +
             "                                            	<!-- // Begin Module: Standard Header Image \\\\ -->" +
-            "                                            	<img src=\"http://213.128.89.156/plesk-site-preview/uskudardenetim.com/Images/header.png?v2 \" style=\"max-width:600px;\" id=\"headerImage campaign-icon\" mc:label=\"header_image\" mc:edit=\"header_image\" mc:allowdesigner mc:allowtext />" +
+            "                                            	<img src=\"http://uskudardenetim.com/Images/header.png \" style=\"max-width:600px;\" id=\"headerImage campaign-icon\" mc:label=\"header_image\" mc:edit=\"header_image\" mc:allowdesigner mc:allowtext />" +
             "                                            	<!-- // End Module: Standard Header Image \\\\ -->" +
             "                                            " +
             "                                            </td>" +
@@ -398,7 +398,7 @@ namespace MailReceiver.Base
             "                                                            	<tr>" +
             "                                                                	<td valign=\"middle\" class=\"templateButtonContent\">" +
             "                                                                    	<div mc:edit=\"std_content01\">" +
-            "                                                                        	<a style=\" color:white !important\" href=\" "+ content.Link +" \" target =\"_blank\">Devamını Oku</a>" +
+            "                                                                        	<a style=\" color:white !important\" href=\" " + content.Link + " \" target =\"_blank\">Devamını Oku</a>" +
             "                                                                        </div>" +
             "                                                                    </td>" +
             "                                                                </tr>" +
