@@ -365,7 +365,7 @@ namespace MailReceiver.Base
             "                                            <td class=\"headerContent\">" +
             "                                            " +
             "                                            	<!-- // Begin Module: Standard Header Image \\\\ -->" +
-            "                                            	<img src=\"http://213.128.89.156/plesk-site-preview/uskudardenetim.com/Images/header.png?v2 \" style=\"max-width:600px;\" id=\"headerImage campaign-icon\" mc:label=\"header_image\" mc:edit=\"header_image\" mc:allowdesigner mc:allowtext />" +
+            "                                            	<img src=\"http://213.128.89.156/plesk-site-preview/uskudardenetim.com/Images/header2.png?v2 \" style=\"max-width:600px;\" id=\"headerImage campaign-icon\" mc:label=\"header_image\" mc:edit=\"header_image\" mc:allowdesigner mc:allowtext />" +
             "                                            	<!-- // End Module: Standard Header Image \\\\ -->" +
             "                                            " +
             "                                            </td>" +

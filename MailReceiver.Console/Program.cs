@@ -19,7 +19,7 @@ namespace MailReceiver.Console
                 Credential = new Credential()
                 {
                     UserName = "info@ahmetsariyer.com",
-                    Password = "52Nu9@wr2"
+                    Password = ""
                 },
                 HostName = "ahmetsariyer.com",
                 Port=587,
