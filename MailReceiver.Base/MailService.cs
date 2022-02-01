@@ -29,6 +29,8 @@ namespace MailReceiver.Base
                     var message = GetMailWithOutImg(request);
                     client.Send(message);
                 }
+                response.Message = "Başarılı.";
+                response.Success = true;
                 return response;
             }
             catch (Exception ex)
